@@ -23,7 +23,29 @@ if choose_mode == "1":
 elif choose_mode =="2":
     print("You chose 2")
 
+def choosing():
+    while True:
+        choice = input("Choose either rock, paper, or scissors: ")
+        valid_choice = False
 
+        for sub_list in list_of_choices_human:
+            if choice in sub_list:
+                valid_choice = True
+                break
+
+        if valid_choice:
+            break
+        else:
+            print("You didn't chose rock paper or scissors!")
+
+    if choice == "1" or choice == "rock":
+        choice = "Rock"
+    elif choice == "2" or choice == "paper":
+        choice = "Paper"
+    elif choice == "3" or choice == "scissors":
+        choice = "Scissors"
+    
+    return choice
 
 
 
@@ -83,3 +105,4 @@ def play_again():
         play()
     else:
         end()
+
