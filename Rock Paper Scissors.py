@@ -13,15 +13,6 @@ while True:
 
 list_of_choices_human = [["Rock","rock","1"],["Paper","paper","2"],["Scissors","scissors","3"]]
 
-def play():
-    choice = choosing()
-    countdown(choice)
-    showdown(choice)
-
-if choose_mode == "1":
-    play()
-elif choose_mode =="2":
-    print("You chose 2")
 
 def choosing():
     while True:
@@ -49,7 +40,7 @@ def choosing():
 
 
 
-def countdown(choice):
+def countdown():
     time.sleep(1)
     print("3")
     time.sleep(1)
@@ -58,13 +49,14 @@ def countdown(choice):
     print("1")
     print("Shoot!")
 
-    print(f"you:{choice}")
-    print(f"computer:{comp_choice_random}")
-
 list_of_choices_comp = ["Rock","Paper","Scissors"]
 comp_choice_random = random.choice(list_of_choices_comp)
 
 def showdown(choice):
+
+    print(f"you:{choice}")
+    print(f"computer:{comp_choice_random}")
+
     if choice == comp_choice_random:
         print("Tie!")
         play_again()
@@ -87,6 +79,20 @@ def showdown(choice):
         print("You win!")
         play_again()
 
+def comp_showdown(choice):
+
+    if choice == "Scissors":
+        comp_choice = "Rock"
+    elif choice == "Rock":
+        comp_choice = "Paper"
+    elif choice == "Paper":
+        comp_choice = "Scissors"
+
+    print(f"you:{choice}")
+    print(f"computer:{comp_choice}")
+    print("You lose!")
+    play_again()
+
 
 def end():
     print("Bye bye I hope you enjoyed")
@@ -102,7 +108,28 @@ def play_again():
         else:
             print("Choose either yes or no")
     if choose_to_play_again == "Y" or choose_to_play_again == "y":
-        play()
+        if choose_mode == "1":
+            play()
+        else:
+            comp_play()
     else:
         end()
 
+
+def play():
+    choice = choosing()
+    countdown()
+    showdown(choice)
+
+def comp_play():
+    choice = choosing()
+    countdown()
+    comp_showdown(choice)
+
+
+if choose_mode == "1":
+    play()
+elif choose_mode =="2":
+    comp_play()
+
+# For future I want to add a auto win for the user
