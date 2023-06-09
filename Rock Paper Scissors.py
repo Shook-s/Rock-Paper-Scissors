@@ -12,6 +12,9 @@ while True:
     else:
         print("Choose either 1, 2 or 3!")
 
+play_count_normal = 0
+play_count_auto_win = 0
+play_count__auto_lose = 0
 
 def choosing():
     while True:
@@ -52,29 +55,39 @@ comp_choice_random = random.choice(list_of_choices_comp)
 
 def showdown(choice):
 
-    print(f"you:{choice}")
-    print(f"computer:{comp_choice_random}")
+    outcomes = {
+        "Rock": {"Scissors": "You win!", "Paper": "You lose"},
+        "Paper": {"Rock": "You win!", "Scissors": "You lose"},
+        "Scissors": {"Paper": "You win!", "Rock": "You lose"}
+    }
 
-    if choice == comp_choice_random:
-        print("Tie!")
-        play_again()
-    elif choice == "Rock" and comp_choice_random == "Paper":
-        print("You lose")
-        play_again()
-    elif choice == "Rock" and comp_choice_random == "Scissors":
+    if choose_mode == "1":
+
+        print(f"you:{choice}")
+        print(f"computer:{comp_choice_random}")
+
+        if choice == comp_choice_random:
+            print("Tie!")
+            play_again()
+        else:
+            result = outcomes.get(choice)
+            if result:
+                if comp_choice_random in result:
+                    print(result[comp_choice_random])
+                    play_again()
+
+    elif choose_mode == "3":
+        if choice == "Rock":
+            comp_choice_random = "Scissors"
+        elif choice == "Paper":
+            comp_choice_random = "Rock"
+        elif choice == "Scissors":
+            comp_choice_random = "Paper"
+        
+        print(f"you:{choice}")
+        print(f"computer:{comp_choice_random}")
         print("You win!")
-        play_again()
-    elif choice == "Paper" and comp_choice_random == "Scissors":
-        print("You lose")
-        play_again()
-    elif choice == "Paper" and comp_choice_random == "Rock":
-        print("You win!")
-        play_again()
-    elif choice == "Scissors" and comp_choice_random == "Rock":
-        print("You lose")
-        play_again()
-    elif choice == "Scissors" and comp_choice_random == "Paper":
-        print("You win!")
+
         play_again()
 
 def comp_showdown(choice):
@@ -90,10 +103,6 @@ def comp_showdown(choice):
         print(f"you:{choice}")
         print(f"computer:{comp_choice}")
         print("You lose!")
-    elif choose_mode == "3":
-        print(f"you:{comp_choice}")
-        print(f"computer:{choice}")
-        print("You win!")
 
     play_again()
 
@@ -113,8 +122,11 @@ def play_again():
             print("Choose either yes or no")
     if choose_to_play_again == "Y" or choose_to_play_again == "y":
         if choose_mode == "1":
+            global play_count_normal
+            play_count_normal =+ 1
             play()
         else:
+            global play_count_auto_win
             comp_play()
     else:
         end()
@@ -130,9 +142,9 @@ def comp_play():
     countdown()
     comp_showdown(choice)
 
-if choose_mode == "1":
+if choose_mode == "1" or choose_mode =="3":
     play()
-elif choose_mode == "2" or choose_mode =="3":
+elif choose_mode == "2":
     comp_play()
 
 # For future I want to add a tracker for play count
