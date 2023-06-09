@@ -2,16 +2,15 @@
 import time
 import random
 print("hi this is rock-paper-scissors by shook-s")
-print("You can either choose to try and beat the computer or always loose to the computer")
+print("You can either choose to try and beat the computer, always loose to the computer or always win")
+
 
 while True:
-    choose_mode = input("[1] Beat computer\n[2] Lose to computer\n")
-    if choose_mode in ["1","2"]:
+    choose_mode = input("[1] Beat computer\n[2] Lose to computer\n[3] Always win agaisnt computer\n")
+    if choose_mode in ["1","2","3"]:
         break
     else:
-        print("Choose either 1 or 2!")
-
-list_of_choices_human = [["Rock","rock","1"],["Paper","paper","2"],["Scissors","scissors","3"]]
+        print("Choose either 1, 2 or 3!")
 
 
 def choosing():
@@ -19,7 +18,7 @@ def choosing():
         choice = input("Choose either rock, paper, or scissors: ")
         valid_choice = False
 
-        for sub_list in list_of_choices_human:
+        for sub_list in [["Rock","rock","1"],["Paper","paper","2"],["Scissors","scissors","3"]]:
             if choice in sub_list:
                 valid_choice = True
                 break
@@ -37,7 +36,6 @@ def choosing():
         choice = "Scissors"
     
     return choice
-
 
 
 def countdown():
@@ -80,7 +78,7 @@ def showdown(choice):
         play_again()
 
 def comp_showdown(choice):
-
+    
     if choice == "Scissors":
         comp_choice = "Rock"
     elif choice == "Rock":
@@ -88,9 +86,15 @@ def comp_showdown(choice):
     elif choice == "Paper":
         comp_choice = "Scissors"
 
-    print(f"you:{choice}")
-    print(f"computer:{comp_choice}")
-    print("You lose!")
+    if choose_mode == "2":    
+        print(f"you:{choice}")
+        print(f"computer:{comp_choice}")
+        print("You lose!")
+    elif choose_mode == "3":
+        print(f"you:{comp_choice}")
+        print(f"computer:{choice}")
+        print("You win!")
+
     play_again()
 
 
@@ -126,10 +130,9 @@ def comp_play():
     countdown()
     comp_showdown(choice)
 
-
 if choose_mode == "1":
     play()
-elif choose_mode =="2":
+elif choose_mode == "2" or choose_mode =="3":
     comp_play()
 
-# For future I want to add a auto win for the user
+# For future I want to add a tracker for play count
