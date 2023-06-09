@@ -14,7 +14,7 @@ while True:
 
 play_count_normal = 0
 play_count_auto_win = 0
-play_count__auto_lose = 0
+play_count_auto_lose = 0
 
 def choosing():
     while True:
@@ -50,10 +50,11 @@ def countdown():
     print("1")
     print("Shoot!")
 
-list_of_choices_comp = ["Rock","Paper","Scissors"]
-comp_choice_random = random.choice(list_of_choices_comp)
 
 def showdown(choice):
+
+    list_of_choices_comp = ["Rock","Paper","Scissors"]
+    comp_choice_random = random.choice(list_of_choices_comp)
 
     outcomes = {
         "Rock": {"Scissors": "You win!", "Paper": "You lose"},
@@ -63,29 +64,31 @@ def showdown(choice):
 
     if choose_mode == "1":
 
-        print(f"you:{choice}")
-        print(f"computer:{comp_choice_random}")
 
         if choice == comp_choice_random:
+            print(f"you:{choice}")
+            print(f"computer:{comp_choice_random}")
             print("Tie!")
             play_again()
         else:
             result = outcomes.get(choice)
             if result:
                 if comp_choice_random in result:
+                    print(f"you:{choice}")
+                    print(f"computer:{comp_choice_random}")
                     print(result[comp_choice_random])
                     play_again()
 
     elif choose_mode == "3":
         if choice == "Rock":
-            comp_choice_random = "Scissors"
+            comp_forced_choice = "Scissors"
         elif choice == "Paper":
-            comp_choice_random = "Rock"
+            comp_forced_choice = "Rock"
         elif choice == "Scissors":
-            comp_choice_random = "Paper"
+            comp_forced_choice = "Paper"
         
         print(f"you:{choice}")
-        print(f"computer:{comp_choice_random}")
+        print(f"computer:{comp_forced_choice}")
         print("You win!")
 
         play_again()
@@ -113,21 +116,33 @@ def end():
 
 
 def play_again():
-    valid_choices = ["Y", "y", "N", "n"]
     while True:
         choose_to_play_again = input("Do you want to play again? [Y/N] ")
-        if choose_to_play_again in valid_choices:
+        if choose_to_play_again in ["Y", "y", "N", "n","1","2"]:
             break
         else:
             print("Choose either yes or no")
-    if choose_to_play_again == "Y" or choose_to_play_again == "y":
+    if choose_to_play_again in ["Y","y","1"]:
         if choose_mode == "1":
             global play_count_normal
-            play_count_normal =+ 1
+            play_count_normal += 1
+            if play_count_normal > 4:
+                print("huh you really are a passionate player")
             play()
-        else:
-            global play_count_auto_win
+
+        elif choose_mode =="2":
+            global play_count_auto_lose
+            play_count_auto_lose += 1
+            if play_count_auto_lose > 4:
+                print("you're still at it?")
             comp_play()
+
+        elif choose_mode == "3":
+            global play_count_auto_win
+            play_count_auto_win += 1
+            if play_count_auto_win > 4:
+                print("You really like the taste of victory don't you")
+            play()
     else:
         end()
 
@@ -146,5 +161,3 @@ if choose_mode == "1" or choose_mode =="3":
     play()
 elif choose_mode == "2":
     comp_play()
-
-# For future I want to add a tracker for play count
